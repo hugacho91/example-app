@@ -1,0 +1,12 @@
+
+
+COMANDOS PARA CONECTARCE VIA CONSOLA 
+
+docker exec -it example-app-mysql-1 mysql -u sail -p
+PASS: password
+
+COMANDOS PARA INGRESAR EN PhpMyadmin
+
+http://localhost:8080/PhpMyadmin
+user: sail
+pass: password

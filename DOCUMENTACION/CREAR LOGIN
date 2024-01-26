@@ -1,0 +1,98 @@
+COMANDOS PARA CREARLO CON sail
+
+docker-compose down
+docker-compose up -d
+
+
+docker-compose exec laravel.test composer require laravel/breeze --dev
+docker-compose exec laravel.test php artisan breeze:install blade
+
+./vendor/bin/sail composer require laravel/breeze --dev
+
+./vendor/bin/sail php artisan breeze:install blade
+
+./vendor/bin/sail npm run dev
+
+./vendor/bin/sail php artisan migrate
+
+
+docker-compose exec laravel.test npm install && docker-compose exec laravel.test npm run dev
+
+docker-compose exec laravel.test composer require --dev laravel-lang/common
+docker-compose exec laravel.test php artisan lang:update
+docker-compose exec laravel.test composer require laravel-lang/locales
+
+
+docker-compose exec laravel.test php artisan cache:clear
+docker-compose exec laravel.test php artisan config:cache
+
+docker-compose exec laravel.test npm install
+docker-compose exec laravel.test npm run dev
+
+
+docker-compose exec laravel.test mv resources/images/logo-lp.png public/images/
+
+PARA CAMBIAR DE DARK MODE A LIGHT MODE
+
+AGREGO EN raiz/tailwind.config.js
+
+darkMode: 'class', (esta linea)
+
+CREAR ADMIN 
+
+docker-compose exec laravel.test composer require jeroennoten/laravel-adminlte
+docker-compose exec laravel.test php artisan adminlte:install
+
+
+
+CRUD
+
+docker-compose exec laravel.test composer require takielias/tablar
+docker-compose exec laravel.test php artisan tablar:install
+
+./vendor/bin/sail npm install
+./vendor/bin/sail php artisan migrate:fresh
+
+./vendor/bin/sail exec laravel.test mkdir -p /var/www/html/node_modules
+./vendor/bin/sail exec laravel.test chown -R sail:sail /var/www/html/node_modules
+./vendor/bin/sail exec laravel.test chmod -R 755 /var/www/html/node_modules
+
+
+
+docker-compose exec laravel.test composer require takielias/tablar-crud-generator --dev
+
+docker-compose exec laravel.test php artisan vendor:publish --tag=crud
+
+
+docker-compose exec laravel.test php artisan make:migration create_ciudad_table
+
+docker-compose exec laravel.test php artisan make:crud ciudad
+
+
+DAR PERMISOS A CARPETA
+sudo chmod -R 777 database
+
+sudo chmod -R 777 /var/www/html/node_modules
+
+\\wsl.localhost\Ubuntu-22.04\home\hugo\example-app
+
+cp -r \\wsl.localhost\Ubuntu-22.04\home\hugo\example-app backup-example-app
+
+
+INSTALAR BACKUP PROYECTO
+https://www.youtube.com/watch?v=dAbxzqCrdDQ
+
+sudo chmod 777 ./composer.json
+sudo chmod 777 ./composer.lock
+./vendor/bin/sail composer require spatie/laravel-backup
+
+docker-compose exec laravel.test php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider"
+
+REALIZAR BACKUP
+
+docker-compose exec laravel.test php artisan backup:run
+
+LISTAR BACKUP 
+docker-compose exec laravel.test php artisan backup:list
+
+
