@@ -4,7 +4,7 @@
     <div class="container container-tight py-4">
         <div class="text-center mb-1 mt-5">
             <a href="" class="navbar-brand navbar-brand-autodark">
-                <img src="{{asset(config('tablar.auth_logo.img.path','images/logo-lp.png'))}}" height="150"
+                <img src="{{asset(config('tablar.auth_logo_2.img.path','images/logo-lp.png'))}}" height="150"
                      alt=""></a>
         </div>
         <div class="card card-md">

@@ -8,14 +8,12 @@ use Illuminate\Database\Eloquent\Model;
  * Class Expediente
  *
  * @property $id
- * @property $fecha
- * @property $fecha_cierre
- * @property $empleador
- * @property $empleado
- * @property $cuit_empleado
- * @property $dni_empleado
- * @property $estado
- * @property $descripcion
+ * @property $numero_expediente
+ * @property $fecha_entrada
+ * @property $iniciador
+ * @property $extracto
+ * @property $antecedentes
+ * @property $agregados
  * @property $created_at
  * @property $updated_at
  *
@@ -26,14 +24,12 @@ class Expediente extends Model
 {
     
     static $rules = [
-		'fecha' => 'required',
-		'fecha_cierre' => 'required',
-		'empleador' => 'required',
-		'empleado' => 'required',
-		'cuit_empleado' => 'required',
-		'dni_empleado' => 'required',
-		'estado' => 'required',
-		'descripcion' => 'required',
+		'numero_expediente' => 'required',
+		'fecha_entrada' => 'required',
+		'iniciador' => 'required',
+		'extracto' => 'required',
+		'antecedentes' => 'required',
+		'agregados' => 'required',
     ];
 
     protected $perPage = 20;
@@ -43,8 +39,11 @@ class Expediente extends Model
      *
      * @var array
      */
-    protected $fillable = ['fecha','fecha_cierre','empleador','empleado','cuit_empleado','dni_empleado','estado','descripcion'];
+    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','extracto','antecedentes','agregados'];
 
-
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class);
+    }
 
 }

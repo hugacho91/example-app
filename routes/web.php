@@ -2,6 +2,7 @@
 use App\Http\Controllers\InstitucioneController;
 use App\Http\Controllers\CiudadController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ArchivoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -44,3 +46,8 @@ Route::resource('/expedientes', App\Http\Controllers\ExpedienteController::class
 Route::resource('/informe-fallas', App\Http\Controllers\InformeFallaController::class);
 Route::resource('/solucion-fallas', App\Http\Controllers\SolucionFallaController::class);
 Route::resource('/usuarios', App\Http\Controllers\UsuarioController::class);
+Route::post('/upload', 'ArchivoController@store')->name('archivo.store');
+Route::get('archivos/{archivo}/ver', [ArchivoController::class, 'ver'])->name('archivos.ver');
+Route::get('archivos/{archivo}/descargar', [ArchivoController::class, 'descargar'])->name('archivos.descargar');
+Route::delete('archivos/{archivo}', [ArchivoController::class, 'eliminar'])->name('archivos.eliminar');
+

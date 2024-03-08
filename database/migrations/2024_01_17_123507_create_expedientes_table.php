@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    /*public function up(): void
     {
         Schema::create('expedientes', function (Blueprint $table) {
             $table->id();
@@ -21,6 +21,20 @@ return new class extends Migration
             $table->string('dni_empleado');
             $table->string('estado');
             $table->string('descripcion');
+            $table->timestamps();
+        });
+    }*/
+
+    public function up(): void
+    {
+        Schema::create('expedientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('numero_expediente');
+            $table->date('fecha_entrada');
+            $table->string('iniciador');
+            $table->string('extracto');
+            $table->text('antecedentes');
+            $table->text('agregados');
             $table->timestamps();
         });
     }

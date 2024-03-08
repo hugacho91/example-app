@@ -1,13 +1,12 @@
-@extends('adminlte::page')
+@extends('tablar::page')
 
 
 @section('content')
-    <div class="row">
+<div class="row">
         <div class="col-md-6">
-            <div class="box box-primary">
+            <div class="box box-primary p-4"> <!-- Agregado p-4 para el relleno -->
                 <div class="box-header with-border">
                     <h4 class="box-title">Usuarios</h4>
-                    <!--<h3 class="box-title">Gráfico de Barras (Usuarios)</h3>-->
                 </div>
                 <div class="box-body">
                     <canvas id="usuariosBarChart" style="height:230px"></canvas>
@@ -16,10 +15,9 @@
         </div>
 
         <div class="col-md-6">
-            <div class="box box-info">
+            <div class="box box-info p-4"> <!-- Agregado p-4 para el relleno -->
                 <div class="box-header with-border">
                     <h4 class="box-title">Expedientes</h4>
-                    <!--<h3 class="box-title">Gráfico de Líneas (Expedientes)</h3>-->
                 </div>
                 <div class="box-body">
                     <canvas id="expedientesLineChart" style="height:230px"></canvas>
@@ -30,10 +28,9 @@
     <br><br>
     <div class="row">
         <div class="col-md-6">
-            <div class="box box-success">
+            <div class="box box-success p-4"> <!-- Agregado p-4 para el relleno -->
                 <div class="box-header with-border">
                     <h4 class="box-title">Instituciones</h4>
-                    <!--<h3 class="box-title">Gráfico de Radar (Instituciones)</h3>-->
                 </div>
                 <div class="box-body">
                     <canvas id="institucionesRadarChart" style="height:230px"></canvas>
@@ -42,10 +39,9 @@
         </div>
 
         <div class="col-md-6">
-            <div class="box box-warning">
+            <div class="box box-warning p-4"> <!-- Agregado p-4 para el relleno -->
                 <div class="box-header with-border">
                     <h4 class="box-title">Solución de Fallas</h4>
-                    <!--<h3 class="box-title">Gráfico de Pastel (Solución Fallas)</h3>-->
                 </div>
                 <div class="box-body">
                     <canvas id="solucionFallasPieChart" style="height:230px"></canvas>
@@ -55,9 +51,15 @@
     </div>
 @stop
 
-@section('js')
 
+
+@section('js')
+    <!-- Asegúrate de que jQuery esté cargado -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Asegúrate de que Chart.js esté cargado -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         $(function () {
             // Datos de ejemplo para el gráfico de barras (Usuarios)
@@ -192,4 +194,3 @@
         });
     </script>
 @stop
-

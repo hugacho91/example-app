@@ -50,9 +50,7 @@
                         <div class="card-body">
                             
 <div class="form-group">
-<strong>Fecha:</strong>
-{{ $informeFalla->fecha }}
-</div>
+
 <div class="form-group">
 <strong>Empleado:</strong>
 {{ $informeFalla->empleado }}

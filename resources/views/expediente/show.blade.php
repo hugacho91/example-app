@@ -5,6 +5,7 @@
 @section('content')
     <!-- Page header -->
     <div class="page-header d-print-none">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
@@ -50,44 +51,103 @@
                         <div class="card-body">
                             
 <div class="form-group">
-<strong>Fecha:</strong>
-{{ $expediente->fecha }}
+<strong>Número Expediente:</strong>
+{{ $expediente->numero_expediente }}
 </div>
 <div class="form-group">
-<strong>Fecha Cierre:</strong>
-{{ $expediente->fecha_cierre }}
+<strong>Fecha de Entrada:</strong>
+{{ $expediente->fecha_entrada }}
 </div>
 <div class="form-group">
-<strong>Empleador:</strong>
-{{ $expediente->empleador }}
+<strong>Iniciador:</strong>
+{{ $expediente->iniciador }}
 </div>
 <div class="form-group">
-<strong>Empleado:</strong>
-{{ $expediente->empleado }}
+<strong>Extracto:</strong>
+{{ $expediente->extracto}}
 </div>
 <div class="form-group">
-<strong>Cuit Empleado:</strong>
+<strong>Antecedentes:</strong>
 {{ $expediente->cuit_empleado }}
 </div>
 <div class="form-group">
-<strong>Dni Empleado:</strong>
-{{ $expediente->dni_empleado }}
+<strong>Agregados:</strong>
+{{ $expediente->agregados }}
 </div>
-<div class="form-group">
-<strong>Estado:</strong>
-{{ $expediente->estado }}
-</div>
-<div class="form-group">
-<strong>Descripcion:</strong>
-{{ $expediente->descripcion }}
-</div>
+
 
                         </div>
                     </div>
                 </div>
             </div>
+            <br>
+            @if ($expediente->archivos->count() > 0)
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ruta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($expediente->archivos as $archivo)
+                                <tr id="archivo-{{ $archivo->id }}">
+                                    <td>{{ $archivo->nombre }}</td>
+                                    <td>{{ $archivo->ruta }}</td>
+                                     <td>
+                                        <a href="{{ route('archivos.ver', $archivo->id) }}" target="_blank" class="btn btn-primary btn-sm">Ver</a>
+                                        <a href="{{ route('archivos.descargar', $archivo->id) }}" target="_blank" class="btn btn-success btn-sm">Descargar</a>
+                                        <button class="btn btn-danger btn-sm delete-file" data-id="{{ $archivo->id }}">Eliminar</button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p>No se encontraron archivos relacionados.</p>
+            @endif
+
         </div>
+
     </div>
+
+    <!-- Agrega el script JavaScript -->
+    <script>
+       $(document).ready(function() {
+            // Maneja el evento de clic en el botón "Eliminar"
+            $('.delete-file').click(function() {
+                var archivoId = $(this).data('id');
+                var confirmacion = confirm('¿Estás seguro de que deseas eliminar este archivo?');
+                if (confirmacion) {
+                    $.ajax({
+                        url: "{{ route('archivos.eliminar', ':id') }}".replace(':id', archivoId),
+                        type: 'DELETE',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Elimina la fila de archivo correspondiente de la tabla
+                                $('#archivo-' + archivoId).remove();
+                                //alert('Archivo eliminado correctamente.');
+                            } else {
+                                alert('Error al eliminar el archivo.');
+                            }
+                        },
+                        error: function(xhr) {
+                            alert('Se produjo un error al eliminar el archivo.');
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+    
+
 @endsection
 
 

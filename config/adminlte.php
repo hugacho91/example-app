@@ -320,28 +320,33 @@ return [
         ],
         ['header' => 'account_settings'],*/
         [
+            'text' => 'Home',
+            'url'  => '/dashboard',
+            'icon' => 'fas fa-fw fa-home',
+        ],
+        [
             'text' => 'Usuarios',
-            'url'  => 'admin/settings',
+            'url'  => '/usuarios',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Permisos',
-            'url'  => 'admin/settings',
+            'url'  => '/permisos',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'Expedientes',
-            'url'  => 'admin/settings',
+            'url'  => '/expedientes',
             'icon' => 'fas fa-file-alt',
         ],
         [
             'text' => 'Historial',
-            'url'  => 'admin/settings',
+            'url'  => '/informe-fallas',
             'icon' => 'fas fa-folder',
         ],
         [
             'text' => 'Instituciones',
-            'url'  => 'instituciones',
+            'url'  => '/instituciones',
             'icon' => 'fas fa-building',
         ],
         [
@@ -349,13 +354,13 @@ return [
             'icon'    => '	fas fa-exclamation-circle',
             'submenu' => [
                 [
-                    'text' => 'Informe de fallas',
-                    'url'  => '#',
+                    'text' => 'Informe de Fallas',
+                    'url'  => '/informe-fallas',
                 ],
                 
                 [
-                    'text' => 'Soluciones fallas',
-                    'url'  => '#',
+                    'text' => 'Soluciones de Fallas',
+                    'url'  => '/solucion-fallas',
                 ],
             ],
         ],

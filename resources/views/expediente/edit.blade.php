@@ -5,6 +5,8 @@
 @section('content')
     <!-- Page header -->
     <div class="page-header d-print-none">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
@@ -56,11 +58,78 @@
                                 @include('expediente.form')
                             </form>
                         </div>
+                        <br>
+                        <div class="card-body">
+                            <label class="form-label">Archivos relacionados:</label>
+                            @if ($expediente->archivos->count() > 0)
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Ruta</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($expediente->archivos as $archivo)
+                                            <tr id="archivo-{{ $archivo->id }}">
+                                                <td>{{ $archivo->nombre }}</td>
+                                                <td>{{ $archivo->ruta }}</td>
+                                                <td>
+                                                    <a href="{{ route('archivos.ver', $archivo->id) }}" target="_blank" class="btn btn-primary btn-sm">Ver</a>
+                                                    <a href="{{ route('archivos.descargar', $archivo->id) }}" target="_blank" class="btn btn-success btn-sm">Descargar</a>
+                                                    <button class="btn btn-danger btn-sm delete-file" data-id="{{ $archivo->id }}">Eliminar</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <p>No se encontraron archivos relacionados.</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Agrega el script JavaScript -->
+
+    <script>
+       $(document).ready(function() {
+            // Maneja el evento de clic en el botón "Eliminar"
+            $('.delete-file').click(function() {
+                var archivoId = $(this).data('id');
+                var confirmacion = confirm('¿Estás seguro de que deseas eliminar este archivo?');
+                if (confirmacion) {
+                    $.ajax({
+                        url: "{{ route('archivos.eliminar', ':id') }}".replace(':id', archivoId),
+                        type: 'DELETE',
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Elimina la fila de archivo correspondiente de la tabla
+                                $('#archivo-' + archivoId).remove();
+                                //alert('Archivo eliminado correctamente.');
+                            } else {
+                                alert('Error al eliminar el archivo.');
+                            }
+                        },
+                        error: function(xhr) {
+                            alert('Se produjo un error al eliminar el archivo.');
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
+
 @endsection
 
 

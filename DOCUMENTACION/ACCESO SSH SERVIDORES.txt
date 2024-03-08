@@ -1,0 +1,8 @@
+16420DES001 10.5.90.19
+
+16420SRV001 10.20.16.38
+
+USER: ltramontini
+PASS: lionel2023
+
+ssh ltramontini@10.20.16.38

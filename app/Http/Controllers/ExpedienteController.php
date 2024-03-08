@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Expediente;
 use Illuminate\Http\Request;
+use App\Models\Archivo;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class ExpedienteController
@@ -43,12 +45,34 @@ class ExpedienteController extends Controller
      */
     public function store(Request $request)
     {
+
         request()->validate(Expediente::$rules);
 
         $expediente = Expediente::create($request->all());
 
+
+        $files = $request->file('files');
+
+        
+        // Recorrer los archivos y guardarlos en la base de datos
+        foreach($files as $file) {
+            // Guardar el archivo en el sistema de archivos
+            if(Storage::putFileAs('/public/'.$expediente->id.'/',$file,$file->getClientOriginalName())){
+                $nombreArchivo = $file->getClientOriginalName(); // Nombre original del archivo
+                $rutaArchivo = $file->store('archivos'); // Ruta donde se guardará el archivo
+
+                // Crear un nuevo registro de archivo y relacionarlo con el expediente
+                $archivo = new Archivo();
+                $archivo->nombre = $nombreArchivo;
+                $archivo->ruta = $rutaArchivo;
+                $archivo->expediente_id = $expediente->id; // Relacionar con el expediente recién creado
+                $archivo->save();
+            }
+            
+        }
+
         return redirect()->route('expedientes.index')
-            ->with('success', 'Expediente creado Correctamente.');
+            ->with('success', 'Expediente creado Exitosamente.');
     }
 
     /**
@@ -57,12 +81,22 @@ class ExpedienteController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+   /* public function show($id)
     {
         $expediente = Expediente::find($id);
 
         return view('expediente.show', compact('expediente'));
+    }*/
+
+    public function show($id)
+    {
+        // Cargar el expediente junto con la relación de archivos
+        $expediente = Expediente::with('archivos')->find($id);
+        
+        // Pasar los datos del expediente a la vista
+        return view('expediente.show', compact('expediente'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -86,12 +120,36 @@ class ExpedienteController extends Controller
      */
     public function update(Request $request, Expediente $expediente)
     {
-        request()->validate(Expediente::$rules);
+        // Validar la solicitud
+        $request->validate(Expediente::$rules);
 
+        // Actualizar los atributos del expediente
         $expediente->update($request->all());
 
+        // Obtener los archivos enviados en la solicitud
+        $files = $request->file('files');
+
+        // Verificar si se enviaron archivos en la solicitud
+        if ($files) {
+            // Recorrer los archivos y actualizar la relación con el expediente
+            foreach($files as $file) {
+                // Guardar el archivo en el sistema de archivos
+                if(Storage::putFileAs('/public/'.$expediente->id.'/',$file,$file->getClientOriginalName())){
+                    $nombreArchivo = $file->getClientOriginalName(); // Nombre original del archivo
+                    $rutaArchivo = $file->store('archivos'); // Ruta donde se guardará el archivo
+
+                    // Crear un nuevo registro de archivo y relacionarlo con el expediente
+                    $archivo = new Archivo();
+                    $archivo->nombre = $nombreArchivo;
+                    $archivo->ruta = $rutaArchivo;
+                    $archivo->expediente_id = $expediente->id; // Relacionar con el expediente recién creado
+                    $archivo->save();
+                }
+            }
+        }
+
         return redirect()->route('expedientes.index')
-            ->with('success', 'Expediente editado Correctamente.');
+            ->with('success', 'Expediente editado Exitosamente.');
     }
 
     /**
@@ -104,6 +162,6 @@ class ExpedienteController extends Controller
         $expediente = Expediente::find($id)->delete();
 
         return redirect()->route('expedientes.index')
-            ->with('success', 'Expediente eliminado Correctamente.');
+            ->with('success', 'Expediente eliminado Exitosamente.');
     }
 }

@@ -48,7 +48,7 @@
                             <h3 class="card-title">Detalles</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('expedientes.store') }}" id="ajaxForm" role="form"
+                            <form method="POST" enctype="multipart/form-data" action="{{ route('expedientes.store') }}" id="ajaxForm" role="form"
                                   enctype="multipart/form-data">
                                 @csrf
                                 @include('expediente.form')

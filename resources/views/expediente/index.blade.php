@@ -85,14 +85,12 @@
                                         </svg>
                                     </th>
                                     
-										<th>Fecha</th>
-										<th>Fecha Cierre</th>
-										<th>Empleador</th>
-										<th>Empleado</th>
-										<th>Cuit Empleado</th>
-										<th>Dni Empleado</th>
-										<th>Estado</th>
-										<th>Descripcion</th>
+										<th>Número Expediente</th>
+										<th>Fecha Entrada</th>
+										<th>Iniciador</th>
+										<th>Extracto</th>
+										<th>Antecedentes</th>
+										<th>Agregados</th>
 
                                     <th class="w-1"></th>
                                 </tr>
@@ -105,14 +103,12 @@
                                                    aria-label="Select expediente"></td>
                                         <td>{{ ++$i }}</td>
                                         
-											<td>{{ $expediente->fecha }}</td>
-											<td>{{ $expediente->fecha_cierre }}</td>
-											<td>{{ $expediente->empleador }}</td>
-											<td>{{ $expediente->empleado }}</td>
-											<td>{{ $expediente->cuit_empleado }}</td>
-											<td>{{ $expediente->dni_empleado }}</td>
-											<td>{{ $expediente->estado }}</td>
-											<td>{{ $expediente->descripcion }}</td>
+											<td>{{ $expediente->numero_expediente }}</td>
+											<td>{{ $expediente->fecha_entrada }}</td>
+											<td>{{ $expediente->iniciador }}</td>
+											<td>{{ $expediente->extracto}}</td>
+											<td>{{ $expediente->antecedentes }}</td>
+											<td>{{ $expediente->agregados }}</td>
 
                                         <td>
                                             <div class="btn-list flex-nowrap">

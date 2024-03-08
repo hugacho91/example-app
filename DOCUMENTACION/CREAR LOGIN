@@ -18,6 +18,7 @@ docker-compose exec laravel.test php artisan breeze:install blade
 
 docker-compose exec laravel.test npm install && docker-compose exec laravel.test npm run dev
 
+
 docker-compose exec laravel.test composer require --dev laravel-lang/common
 docker-compose exec laravel.test php artisan lang:update
 docker-compose exec laravel.test composer require laravel-lang/locales
@@ -57,20 +58,25 @@ docker-compose exec laravel.test php artisan tablar:install
 ./vendor/bin/sail exec laravel.test chown -R sail:sail /var/www/html/node_modules
 ./vendor/bin/sail exec laravel.test chmod -R 755 /var/www/html/node_modules
 
-
+docker-compose exec laravel.test php artisan tablar:export-all
 
 docker-compose exec laravel.test composer require takielias/tablar-crud-generator --dev
 
 docker-compose exec laravel.test php artisan vendor:publish --tag=crud
 
 
-docker-compose exec laravel.test php artisan make:migration create_ciudad_table
+docker-compose exec laravel.test php artisan make:crud instituciones --lang=spanish
 
-docker-compose exec laravel.test php artisan make:crud ciudad
 
+docker-compose exec laravel.test php artisan make:migration create_instituciones_table
+
+docker-compose exec laravel.test php artisan make:crud instituciones
+docker-compose exec laravel.test php artisan make:crud instituciones —-crud-name=Instituciones
 
 DAR PERMISOS A CARPETA
 sudo chmod -R 777 database
+
+
 
 sudo chmod -R 777 /var/www/html/node_modules
 
@@ -94,5 +100,36 @@ docker-compose exec laravel.test php artisan backup:run
 
 LISTAR BACKUP 
 docker-compose exec laravel.test php artisan backup:list
+
+
+docker-compose exec laravel.test php artisan optimize
+
+
+
+
+
+
+
+docker-compose exec laravel.test php artisan make:migration create_usuarios_table
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan make:crud usuarios
+
+
+docker-compose exec laravel.test php artisan make:migration create_informe_fallas_table
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan make:crud informe_fallas
+
+
+docker-compose exec laravel.test php artisan make:migration create_solucion_fallas_table
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan make:crud solucion_fallas
+
+
+docker-compose exec laravel.test php artisan make:crud users
+
+
+docker-compose exec laravel.test php artisan make:migration create_expedientes_table
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan make:crud expedientes
 
 

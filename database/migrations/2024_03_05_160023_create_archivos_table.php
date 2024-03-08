@@ -9,12 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('instituciones', function (Blueprint $table) {
+        Schema::create('archivos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('expediente_id');
+            $table->foreign('expediente_id')->references('id')->on('expedientes')->onDelete('cascade');
             $table->string('nombre');
-            $table->string('ciudad');
+            $table->string('ruta');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instituciones');
+        Schema::dropIfExists('archivos');
     }
 };

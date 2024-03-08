@@ -10,10 +10,10 @@ return [
     |
     */
 
-    'title' => 'Tablar',
+    'title' => 'Administrador',
     'title_prefix' => '',
     'title_postfix' => '',
-    'bottom_title' => 'Tablar',
+    'bottom_title' => 'Administrador',
     'current_version' => 'v4.8',
 
 
@@ -53,7 +53,7 @@ return [
     'auth_logo_2' => [
         'enabled' => false,
         'img' => [
-            'path' => 'images/logo-lp-2.png',
+            'path' => 'images/logo-lp.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 150,
@@ -192,17 +192,17 @@ return [
         ],
 
         [
-            'text' => 'Falllas',
+            'text' => 'Fallas',
             'url' => '#',
             'icon' => 'ti ti-help',
             'active' => ['support1'],
             'submenu' => [
-                [
+                /*[
                     'text' => 'Informe de Fallas',
                     'url' => '/informe-fallas',
                     'icon' => 'ti ti-article',
                     
-                ],
+                ],*/
                 [
                     'text' => 'Solución de Fallas',
                     'url' => '/solucion-fallas',
