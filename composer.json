@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "spatie/laravel-backup": "^8.5",
+        "spatie/laravel-permission": "^6.4",
         "takielias/tablar": "^4.9"
     },
     "require-dev": {

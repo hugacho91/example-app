@@ -27,9 +27,6 @@ class Expediente extends Model
 		'numero_expediente' => 'required',
 		'fecha_entrada' => 'required',
 		'iniciador' => 'required',
-		'extracto' => 'required',
-		'antecedentes' => 'required',
-		'agregados' => 'required',
     ];
 
     protected $perPage = 20;
@@ -39,11 +36,22 @@ class Expediente extends Model
      *
      * @var array
      */
-    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','extracto','antecedentes','agregados'];
+    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','extracto','antecedentes','agregados','delegacion_id','seccion_id'];
 
     public function archivos()
     {
         return $this->hasMany(Archivo::class);
     }
+
+    public function delegacione(){
+      return $this->hasOne('App\Models\Delegacione','id','delegacion_id');
+    }
+
+
+
+    public function seccione(){
+      return $this->hasOne('App\Models\Seccione','id','seccion_id');
+    }
+    
 
 }

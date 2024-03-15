@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Delegacione;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class UserController
@@ -32,7 +34,12 @@ class UserController extends Controller
     public function create()
     {
         $user = new User();
-        return view('user.create', compact('user'));
+
+        $roles = Role::all();
+
+        $delegaciones= Delegacione::pluck('nombre','id');
+
+        return view('user.create', compact('user','roles','delegaciones'));
     }
 
     /**
@@ -45,7 +52,21 @@ class UserController extends Controller
     {
         request()->validate(User::$rules);
 
-        $user = User::create($request->all());
+        // Inicializar $data como un arreglo vacío
+		$data = [];
+
+		// Obtener todos los datos del formulario y asignarlos a $data
+		$data = $request->all();
+
+        // Verificar y establecer los campos como nulos si vienen con el valor 0
+        $nullableFields = ['delegacion_id'];
+        foreach ($nullableFields as $field) {
+            if ($data[$field] == 0) {
+                $data[$field] = null;
+            }
+        }
+
+        $user = User::create($data);
 
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
@@ -74,7 +95,10 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        $delegaciones= Delegacione::pluck('nombre','id');
+
+        return view('user.edit', compact('user','roles','delegaciones'));
     }
 
     /**
@@ -86,9 +110,25 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        request()->validate(User::$rules);
+       // request()->validate(User::$rules);
 
-        $user->update($request->all());
+        // Inicializar $data como un arreglo vacío
+		$data = [];
+
+		// Obtener todos los datos del formulario y asignarlos a $data
+		$data = $request->all();
+
+        // Verificar y establecer los campos como nulos si vienen con el valor 0
+        $nullableFields = ['delegacion_id'];
+        foreach ($nullableFields as $field) {
+            if ($data[$field] == 0) {
+                $data[$field] = null;
+            }
+        }
+
+        $user->update($data);
+
+        $user->roles()->sync($request->roles);
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');

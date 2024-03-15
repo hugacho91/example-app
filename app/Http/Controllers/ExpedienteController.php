@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Expediente;
 use Illuminate\Http\Request;
 use App\Models\Archivo;
+use App\Models\Delegacione;
+use App\Models\Seccione;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -18,12 +20,26 @@ class ExpedienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('can:expedientes.index');
+    }
+
     public function index()
     {
         $expedientes = Expediente::paginate(10);
 
         return view('expediente.index', compact('expedientes'))
             ->with('i', (request()->input('page', 1) - 1) * $expedientes->perPage());
+    }
+
+    public function reporte()
+    {
+        // Aquí puedes incluir la lógica para generar el reporte
+        $expedientes = Expediente::all(); // Por ejemplo, obtenemos todos los expedientes
+
+        // Devolvemos la vista del reporte junto con los datos necesarios
+        return view('expedientes.reporte', compact('expedientes'));
     }
 
     /**
@@ -34,7 +50,11 @@ class ExpedienteController extends Controller
     public function create()
     {
         $expediente = new Expediente();
-        return view('expediente.create', compact('expediente'));
+
+        $delegaciones= Delegacione::pluck('nombre','id');
+        $secciones= Seccione::pluck('nombre','id');
+
+        return view('expediente.create', compact('expediente','delegaciones','secciones'));
     }
 
     /**
@@ -48,28 +68,54 @@ class ExpedienteController extends Controller
 
         request()->validate(Expediente::$rules);
 
-        $expediente = Expediente::create($request->all());
+        // Inicializar $data como un arreglo vacío
+		$data = [];
 
+		// Obtener todos los datos del formulario y asignarlos a $data
+		$data = $request->all();
 
-        $files = $request->file('files');
+		// Establecer los campos opcionales como cadenas vacías si no están presentes
+		$fields = ['extracto', 'antecedentes', 'agregados'];
+		foreach ($fields as $field) {
+			$data[$field] = $data[$field] ?? '';
+		}
 
-        
-        // Recorrer los archivos y guardarlos en la base de datos
-        foreach($files as $file) {
-            // Guardar el archivo en el sistema de archivos
-            if(Storage::putFileAs('/public/'.$expediente->id.'/',$file,$file->getClientOriginalName())){
-                $nombreArchivo = $file->getClientOriginalName(); // Nombre original del archivo
-                $rutaArchivo = $file->store('archivos'); // Ruta donde se guardará el archivo
-
-                // Crear un nuevo registro de archivo y relacionarlo con el expediente
-                $archivo = new Archivo();
-                $archivo->nombre = $nombreArchivo;
-                $archivo->ruta = $rutaArchivo;
-                $archivo->expediente_id = $expediente->id; // Relacionar con el expediente recién creado
-                $archivo->save();
+        // Verificar y establecer los campos como nulos si vienen con el valor 0
+        $nullableFields = ['delegacion_id', 'seccion_id'];
+        foreach ($nullableFields as $field) {
+            if ($data[$field] == 0) {
+                $data[$field] = null;
             }
-            
         }
+
+		// Crear el expediente con los datos proporcionados
+		$expediente = Expediente::create($data);
+		
+
+
+
+		if ($request->hasFile('files')) {
+			
+			$files = $request->file('files');
+
+
+			// Recorrer los archivos y guardarlos en la base de datos
+			foreach($files as $file) {
+				// Guardar el archivo en el sistema de archivos
+				if(Storage::putFileAs('/public/'.$expediente->id.'/',$file,$file->getClientOriginalName())){
+					$nombreArchivo = $file->getClientOriginalName(); // Nombre original del archivo
+					$rutaArchivo = $file->store('archivos'); // Ruta donde se guardará el archivo
+
+					// Crear un nuevo registro de archivo y relacionarlo con el expediente
+					$archivo = new Archivo();
+					$archivo->nombre = $nombreArchivo;
+					$archivo->ruta = $rutaArchivo;
+					$archivo->expediente_id = $expediente->id; // Relacionar con el expediente recién creado
+					$archivo->save();
+				}
+
+			}
+	    }
 
         return redirect()->route('expedientes.index')
             ->with('success', 'Expediente creado Exitosamente.');
@@ -108,7 +154,10 @@ class ExpedienteController extends Controller
     {
         $expediente = Expediente::find($id);
 
-        return view('expediente.edit', compact('expediente'));
+        $delegaciones= Delegacione::pluck('nombre','id');
+        $secciones= Seccione::pluck('nombre','id');
+
+        return view('expediente.edit', compact('expediente','delegaciones','secciones'));
     }
 
     /**
@@ -122,9 +171,31 @@ class ExpedienteController extends Controller
     {
         // Validar la solicitud
         $request->validate(Expediente::$rules);
+		
+		
+        // Inicializar $data como un arreglo vacío
+		$data = [];
+
+		// Obtener todos los datos del formulario y asignarlos a $data
+		$data = $request->all();
+
+		// Establecer los campos opcionales como cadenas vacías si no están presentes
+		$fields = ['extracto', 'antecedentes', 'agregados'];
+		foreach ($fields as $field) {
+			$data[$field] = $data[$field] ?? '';
+		}
+        // Verificar y establecer los campos como nulos si vienen con el valor 0
+        $nullableFields = ['delegacion_id', 'seccion_id'];
+        foreach ($nullableFields as $field) {
+            if ($data[$field] == 0) {
+                $data[$field] = null;
+            }
+        }
+
 
         // Actualizar los atributos del expediente
-        $expediente->update($request->all());
+        $expediente->update($data);
+		
 
         // Obtener los archivos enviados en la solicitud
         $files = $request->file('files');

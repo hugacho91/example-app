@@ -16,6 +16,11 @@ class InstitucioneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('can:instituciones.index');
+    }
+
     public function index()
     {
         $instituciones = Institucione::paginate(10);

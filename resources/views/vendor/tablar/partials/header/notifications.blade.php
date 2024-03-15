@@ -1,7 +1,6 @@
 <div class="nav-item dropdown d-none d-md-flex me-3">
-    <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
+    <!--<a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
        aria-label="Show notifications">
-        <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
              stroke-linecap="round" stroke-linejoin="round">
@@ -11,7 +10,7 @@
             <path d="M9 17v1a3 3 0 0 0 6 0v-1"/>
         </svg>
         <span class="badge bg-red"></span>
-    </a>
+    </a>-->
     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
         <div class="card">
             <div class="card-header">

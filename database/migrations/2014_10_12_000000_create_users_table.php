@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('delegacion_id')->nullable(); // Permitir valores nulos
+            $table->foreign('delegacion_id')->references('id')->on('delegaciones')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

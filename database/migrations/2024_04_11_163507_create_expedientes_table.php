@@ -35,6 +35,12 @@ return new class extends Migration
             $table->string('extracto');
             $table->text('antecedentes');
             $table->text('agregados');
+            $table->unsignedBigInteger('delegacion_id')->nullable(); // Permitir valores nulos
+            $table->foreign('delegacion_id')->references('id')->on('delegaciones')->onDelete('cascade');
+            $table->unsignedBigInteger('seccion_id')->nullable(); // Permitir valores nulos
+            $table->foreign('seccion_id')->references('id')->on('secciones')->onDelete('cascade');
+        
+            
             $table->timestamps();
         });
     }

@@ -24,15 +24,15 @@
             @php( $setting_url = $setting_url ? url($setting_url) : '' )
         @endif
 
-        <a href="#" class="dropdown-item">Status</a>
+        <!--<a href="#" class="dropdown-item">Status</a>
         <a href="{{$profile_url}}" class="dropdown-item">Profile</a>
         <a href="#" class="dropdown-item">Feedback</a>
         <div class="dropdown-divider"></div>
-        <a href="{{$setting_url}}" class="dropdown-item">Settings</a>
+        <a href="{{$setting_url}}" class="dropdown-item">Settings</a>-->
         <a class="dropdown-item"
            href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fa fa-fw fa-power-off text-red"></i>
-            {{ __('tablar::tablar.log_out') }}
+            {{ __('Salir') }}
         </a>
 
         <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">

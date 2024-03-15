@@ -21,6 +21,7 @@
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        @can('instituciones.create')
                         <a href="{{ route('instituciones.create') }}" class="btn btn-primary d-none d-sm-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -32,6 +33,7 @@
                             </svg>
                             Crear Institución
                         </a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -114,14 +116,13 @@
                                                         Acciones
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                        <a class="dropdown-item"
-                                                           href="{{ route('instituciones.show',$institucione->id) }}">
-                                                            Ver
-                                                        </a>
+                                                        @can('instituciones.edit')
                                                         <a class="dropdown-item"
                                                            href="{{ route('instituciones.edit',$institucione->id) }}">
                                                             Editar
                                                         </a>
+                                                        @endcan
+                                                        @can('instituciones.destroy')
                                                         <form
                                                             action="{{ route('instituciones.destroy',$institucione->id) }}"
                                                             method="POST">
@@ -134,6 +135,7 @@
                                                                 Eliminar
                                                             </button>
                                                         </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </div>

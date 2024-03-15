@@ -19,6 +19,7 @@
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        @can('informe-fallas.index')
                         <a href="{{ route('informe-fallas.index') }}" class="btn btn-primary d-none d-sm-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -30,6 +31,7 @@
                             </svg>
                             Listado Historial
                         </a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -50,7 +52,9 @@
                         <div class="card-body">
                             
 <div class="form-group">
-
+<strong>Fecha:</strong>
+{{ $informeFalla->fecha }}
+</div>
 <div class="form-group">
 <strong>Empleado:</strong>
 {{ $informeFalla->empleado }}

@@ -55,6 +55,24 @@
 
 
 <div class="form-group mb-3">
+    <label class="form-label">{{ Form::label('delegacion_id', 'Delegación') }}</label>
+    <div>
+        {{ Form::select('delegacion_id', [0 => 'Seleccionar',] + $delegaciones->toArray(), $expediente->delegacion_id, ['class' => 'form-control' . ($errors->has('delegacion_id') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('delegacion_id', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
+<div class="form-group mb-3">
+    <label class="form-label">{{ Form::label('seccion_id', 'Sección') }}</label>
+    <div>
+        {{ Form::select('seccion_id', [0 => 'Seleccionar'] + $secciones->toArray(), $expediente->seccion_id, ['class' => 'form-control' . ($errors->has('seccion_id') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('seccion_id', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
+
+
+<div class="form-group mb-3">
     <label class="form-label">Agregar archivos adicionales:</label>
     <input type="file" name="files[]" class="form-control{{ $errors->has('files') ? ' is-invalid' : '' }}" multiple>
     @if ($errors->has('files'))

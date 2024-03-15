@@ -156,7 +156,7 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'text' => 'Home',
+            'text' => 'Tablero de Control',
             'icon' => 'ti ti-home',
             'url' => '/dashboard'
         ],
@@ -164,34 +164,50 @@ return [
         [
             'text' => 'Usuarios',
             'icon' => 'ti ti-user',
-            'url' => '/usuarios'
+            'url' => '/users',
+            'can' => 'users.index'
         ],
-
         [
-            'text' => 'Permisos',
-            'icon' => 'ti ti-lock',
-            'url' => '/permisos'
+            'text' => 'Roles y permisos',
+            'icon' => 'ti ti-article',
+            'url' => '/roles',
+            'can' => 'roles.index'
         ],
 
         [
             'text' => 'Expedientes',
             'icon' => 'ti ti-files',
-            'url' => '/expedientes'
+            'url' => '/expedientes',
+            'can' => 'expedientes.index'
         ],
 
         [
-            'text' => 'Historial',
+            'text' => 'Actividades',
             'icon' => 'ti ti-folder',
-            'url' => '/informe-fallas'
+            'url' => '/actividades'
         ],
 
         [
             'text' => 'Instituciones',
             'icon' => 'ti ti-home',
-            'url' => '/instituciones'
+            'url' => '/instituciones',
+            'can' => 'instituciones.index'
         ],
 
         [
+            'text' => 'Delegaciones',
+            'icon' => 'ti ti-article',
+            'url' => '/delegaciones',
+            'can' => 'delegaciones.index',
+        ],
+        [
+            'text' => 'Secciones',
+            'icon' => 'ti ti-article',
+            'url' => '/secciones',
+            'can' => 'secciones.index',
+        ],
+
+        /*[
             'text' => 'Fallas',
             'url' => '#',
             'icon' => 'ti ti-help',
@@ -203,7 +219,7 @@ return [
                     'icon' => 'ti ti-article',
                     
                 ],*/
-                [
+                /*[
                     'text' => 'Solución de Fallas',
                     'url' => '/solucion-fallas',
                     'icon' => 'ti ti-article',
@@ -211,7 +227,7 @@ return [
                 ],
             ],
             
-        ],
+        ],*/
 
         /*[
             'text' => 'Support 2',

@@ -21,6 +21,7 @@
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        @can('informe-fallas.create')
                         <a href="{{ route('informe-fallas.create') }}" class="btn btn-primary d-none d-sm-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -32,6 +33,7 @@
                             </svg>
                             Crear Historial
                         </a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -114,14 +116,18 @@
                                                         Acciones
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        @can('informe-fallas.show')
                                                         <a class="dropdown-item"
                                                            href="{{ route('informe-fallas.show',$informeFalla->id) }}">
                                                             Ver
                                                         </a>
+                                                        @endcan
+                                                        @can('informe-fallas.edit')
                                                         <a class="dropdown-item"
                                                            href="{{ route('informe-fallas.edit',$informeFalla->id) }}">
                                                             Editar
                                                         </a>
+                                                        @can('informe-fallas.destroy')
                                                         <form
                                                             action="{{ route('informe-fallas.destroy',$informeFalla->id) }}"
                                                             method="POST">
@@ -134,6 +140,7 @@
                                                                 Eliminar
                                                             </button>
                                                         </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </div>

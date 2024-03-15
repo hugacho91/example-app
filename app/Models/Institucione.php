@@ -37,6 +37,6 @@ class Institucione extends Model
      */
     protected $fillable = ['nombre','ubicacion','descripcion','estado'];
 
-
+   
 
 }

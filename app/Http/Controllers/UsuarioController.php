@@ -16,6 +16,11 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('can:usuarios.index');
+    }
+
     public function index()
     {
         $usuarios = Usuario::paginate(10);

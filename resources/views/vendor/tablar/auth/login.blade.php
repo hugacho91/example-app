@@ -24,7 +24,7 @@
                         <label class="form-label">
                             Contraseña
                             <span class="form-label-description">
-                    <a href="{{route('password.request')}}">Olvide mi Contraseña</a>
+                    <!--<a href="{{route('password.request')}}">Olvide mi Contraseña</a>-->
                   </span>
                         </label>
                         <div class="input-group input-group-flat">
@@ -33,7 +33,7 @@
                                    placeholder="Su contraseña"
                                    autocomplete="off">
                             <span class="input-group-text">
-                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                    <a href="#" class="link-secondary" id="mostrar-pass" title="Mostrar contraseña" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
                            stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12"
@@ -90,4 +90,30 @@
             Don't have account yet? <a href="{{route('register')}}" tabindex="-1">Sign up</a>
         </div>-->
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.querySelector('input[name="password"]');
+            const mostrarPassButton = document.getElementById('mostrar-pass');
+
+            let mouseDown = false;
+
+            mostrarPassButton.addEventListener('mousedown', function (event) {
+                event.preventDefault();
+                mouseDown = true;
+                passwordInput.type = 'text';
+            });
+
+            document.addEventListener('mouseup', function () {
+                if (mouseDown) {
+                    passwordInput.type = 'password';
+                }
+                mouseDown = false;
+            });
+        });
+    </script>
+
+
 @endsection
+
+

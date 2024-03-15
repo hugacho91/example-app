@@ -1,7 +1,7 @@
-<a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
+<!--<a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
    data-bs-toggle="tooltip"
    data-bs-placement="bottom">
-    <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+
     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
          stroke-linejoin="round">
@@ -12,7 +12,7 @@
 <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode"
    data-bs-toggle="tooltip"
    data-bs-placement="bottom">
-    <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+
     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
          stroke-linejoin="round">
@@ -21,4 +21,4 @@
         <path
             d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/>
     </svg>
-</a>
+</a>-->

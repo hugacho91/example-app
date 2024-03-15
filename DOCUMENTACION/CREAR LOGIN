@@ -6,6 +6,7 @@ docker-compose up -d
 
 docker-compose exec laravel.test composer require laravel/breeze --dev
 docker-compose exec laravel.test php artisan breeze:install blade
+docker-compose exec laravel.test php artisan make:migration create_archivos_table
 
 ./vendor/bin/sail composer require laravel/breeze --dev
 
@@ -69,12 +70,24 @@ docker-compose exec laravel.test php artisan make:crud instituciones --lang=span
 
 
 docker-compose exec laravel.test php artisan make:migration create_instituciones_table
-
 docker-compose exec laravel.test php artisan make:crud instituciones
 docker-compose exec laravel.test php artisan make:crud instituciones —-crud-name=Instituciones
 
+
+docker-compose exec laravel.test php artisan make:migration create_delegaciones_table
+./vendor/bin/sail php artisan migrate
+docker-compose exec laravel.test php artisan make:crud delegaciones
+
+docker-compose exec laravel.test php artisan make:migration create_secciones_table
+./vendor/bin/sail php artisan migrate:fresh
+docker-compose exec laravel.test php artisan make:crud secciones
+
 DAR PERMISOS A CARPETA
 sudo chmod -R 777 database
+
+sudo chmod -R 777 resources
+
+sudo chmod -R 777 app
 
 
 
@@ -107,6 +120,11 @@ docker-compose exec laravel.test php artisan optimize
 
 
 
+docker-compose exec laravel.test php artisan make:model Archivo -m
+docker-compose exec laravel.test php artisan make:controller ArchivoController
+
+docker-compose exec laravel.test php artisan storage:link
+
 
 
 
@@ -133,3 +151,21 @@ docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan make:crud expedientes
 
 
+ROLES
+
+
+
+./vendor/bin/sail composer require spatie/laravel-permission
+
+docker-compose exec laravel.test php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+
+docker-compose exec laravel.test php artisan optimize:clear
+
+docker-compose exec laravel.test php artisan migrate
+
+docker-compose exec laravel.test php artisan make:migration create_roles
+
+docker-compose exec laravel.test php artisan migrate
+
+docker-compose exec laravel.test php artisan permission:create-role lectura (para crear un rol)
+docker-compose exec laravel.test php artisan permission:show (para mostrar todos los roles)

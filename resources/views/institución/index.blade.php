@@ -21,6 +21,7 @@
                 <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        @can('instituciones.create')
                         <a href="{{ route('instituciones.create') }}" class="btn btn-primary d-none d-sm-inline-block">
                             <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -32,6 +33,7 @@
                             </svg>
                             Create Institución
                         </a>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -107,17 +109,22 @@
                                                 <div class="dropdown">
                                                     <button class="btn dropdown-toggle align-text-top"
                                                             data-bs-toggle="dropdown">
-                                                        Actions
+                                                        Acciones
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        @can('instituciones.show')
                                                         <a class="dropdown-item"
                                                            href="{{ route('instituciones.show',$institución->id) }}">
-                                                            View
+                                                            Ver
                                                         </a>
+                                                        @endcan
+                                                        @can('instituciones.edit')
                                                         <a class="dropdown-item"
                                                            href="{{ route('instituciones.edit',$institución->id) }}">
-                                                            Edit
+                                                            Editar
                                                         </a>
+                                                        @endcan
+                                                        @can('instituciones.destroy')
                                                         <form
                                                             action="{{ route('instituciones.destroy',$institución->id) }}"
                                                             method="POST">
@@ -127,9 +134,10 @@
                                                                     onclick="if(!confirm('Do you Want to Proceed?')){return false;}"
                                                                     class="dropdown-item text-red"><i
                                                                     class="fa fa-fw fa-trash"></i>
-                                                                Delete
+                                                                Eliminar
                                                             </button>
                                                         </form>
+                                                        @endcan
                                                     </div>
                                                 </div>
                                             </div>
