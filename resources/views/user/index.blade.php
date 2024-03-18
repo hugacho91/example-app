@@ -89,6 +89,7 @@
                                     
 										<th>Nombre</th>
 										<th>Email</th>
+                                        <th>Delegación</th>
 
                                     <th class="w-1"></th>
                                 </tr>
@@ -103,6 +104,8 @@
                                         
 											<td>{{ $user->name }}</td>
 											<td>{{ $user->email }}</td>
+                                            <td>{{ $user->delegacione ? $user->delegacione->nombre : '' }}</td>
+                                          
 
                                         <td>
                                             <div class="btn-list flex-nowrap">

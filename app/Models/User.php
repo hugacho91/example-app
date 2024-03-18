@@ -47,4 +47,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function delegacione(){
+        return $this->hasOne('App\Models\Delegacione','id','delegacion_id');
+    }
 }
