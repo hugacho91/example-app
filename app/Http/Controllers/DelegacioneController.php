@@ -54,7 +54,7 @@ class DelegacioneController extends Controller
         $delegacione = Delegacione::create($request->all());
 
         return redirect()->route('delegaciones.index')
-            ->with('success', 'Delegacione created successfully.');
+            ->with('success', 'Delegacióm creada exitosamente.');
     }
 
     /**
@@ -97,7 +97,7 @@ class DelegacioneController extends Controller
         $delegacione->update($request->all());
 
         return redirect()->route('delegaciones.index')
-            ->with('success', 'Delegacione updated successfully');
+            ->with('success', 'Delegación actualizada exitosamente.');
     }
 
     /**
@@ -110,6 +110,6 @@ class DelegacioneController extends Controller
         $delegacione = Delegacione::find($id)->delete();
 
         return redirect()->route('delegaciones.index')
-            ->with('success', 'Delegacione deleted successfully');
+            ->with('success', 'Delegación eliminada exitosamente.');
     }
 }

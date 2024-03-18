@@ -53,7 +53,7 @@ class SeccioneController extends Controller
         $seccione = Seccione::create($request->all());
 
         return redirect()->route('secciones.index')
-            ->with('success', 'Seccione created successfully.');
+            ->with('success', 'Sección creada exitosamente.');
     }
 
     /**
@@ -96,7 +96,7 @@ class SeccioneController extends Controller
         $seccione->update($request->all());
 
         return redirect()->route('secciones.index')
-            ->with('success', 'Seccione updated successfully');
+            ->with('success', 'Sección actualizada exitosamente');
     }
 
     /**
@@ -109,6 +109,6 @@ class SeccioneController extends Controller
         $seccione = Seccione::find($id)->delete();
 
         return redirect()->route('secciones.index')
-            ->with('success', 'Seccione deleted successfully');
+            ->with('success', 'Sección eliminada exitosamente');
     }
 }

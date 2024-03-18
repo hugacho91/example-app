@@ -79,7 +79,7 @@ class ActividadeController extends Controller
         $actividade = Actividade::create($request->all());
 
         return redirect()->route('actividades.index')
-            ->with('success', 'Actividade created successfully.');
+            ->with('success', 'Actividad creada Exitosamente.');
     }
 
     /**

@@ -48,7 +48,7 @@ class RoleController extends Controller
         $role -> permissions()->sync($request->permissions);
 
         return redirect()->route('roles.index')
-            ->with('success', 'El Rol fue creado correctamente.');
+            ->with('success', 'Rol creado exitosamente.');
     }
 
     /**
@@ -85,7 +85,7 @@ class RoleController extends Controller
         $role -> permissions()->sync($request->permissions);
 
         return redirect()->route('roles.index')
-            ->with('success', 'El rol fue actualizado correctamente');
+            ->with('success', 'Rol actualizado exitosamente.');
     }
 
     /**
@@ -96,6 +96,6 @@ class RoleController extends Controller
         $role = Role::find($id)->delete();
 
         return redirect()->route('roles.index')
-            ->with('success', 'User deleted successfully');
+            ->with('success', 'Rol eliminado exitosamente.');
     }
 }
