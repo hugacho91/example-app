@@ -168,7 +168,7 @@ return [
             'can' => 'users.index'
         ],
         [
-            'text' => 'Roles y permisos',
+            'text' => 'Roles y Permisos',
             'icon' => 'ti ti-lock',
             'url' => '/roles',
             'can' => 'roles.index'
