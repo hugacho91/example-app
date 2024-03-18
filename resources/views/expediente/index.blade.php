@@ -52,23 +52,35 @@
                             <h3 class="card-title">Expediente</h3>
                         </div>
                         <div class="card-body border-bottom py-3">
-                            <div class="d-flex">
-                                <div class="text-muted">
-                                    Ver
-                                    <div class="mx-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm" value="10" size="3"
-                                               aria-label="Invoices count">
-                                    </div>
-                                    entradas
+                        <div class="d-flex">
+                            <div class="text-muted">
+                                Ver
+                                <div class="mx-2 d-inline-block">
+                                    <form action="{{ route('expedientes.index') }}" method="GET">
+                                        <input type="number" name="perPage" class="form-control form-control-sm" value="{{ $perPage }}" size="3" aria-label="Invoices count">
+                                    </form>
                                 </div>
-                                <div class="ms-auto text-muted">
-                                    buscar:
-                                    <div class="ms-2 d-inline-block">
-                                        <input type="text" class="form-control form-control-sm"
-                                               aria-label="Search invoice">
-                                    </div>
+                                entradas
+                            </div>
+                            
+                            <div class="ms-auto text-muted d-flex align-items-center">
+                                <span class="me-2">Buscar por:</span>
+                                <div class="me-2 flex-grow-1">
+                                    <form action="{{ route('expedientes.index') }}" method="GET" class="d-flex">
+                                        <select name="searchBy" class="form-select form-select-sm flex-grow-1 me-2" aria-label="Search by">
+                                            <option value="numero_expediente" {{ $searchBy === 'numero_expediente' ? 'selected' : '' }}>Número de Expediente</option>
+                                            <option value="fecha_entrada" {{ $searchBy === 'fecha_entrada' ? 'selected' : '' }}>Fecha de Entrada</option>
+                                            <option value="iniciador" {{ $searchBy === 'iniciador' ? 'selected' : '' }}>Iniciador</option>
+                                            <option value="delegacion" {{ $searchBy === 'delegacion' ? 'selected' : '' }}>Delegación</option>
+                                            <option value="seccion" {{ $searchBy === 'seccion' ? 'selected' : '' }}>Sección</option>
+                                        </select>
+                                        <input type="text" name="search" class="form-control form-control-sm flex-grow-1" value="{{ $search }}" aria-label="Search">
+                                    </form>
                                 </div>
                             </div>
+
+
+                        </div>
                         </div>
                         <div class="table-responsive min-vh-100">
                             <table class="table card-table table-vcenter text-nowrap datatable">
@@ -99,6 +111,9 @@
                                 </thead>
 
                                 <tbody>
+                                @php
+                                    $i = 0;
+                                @endphp
                                 @forelse ($expedientes as $expediente)
                                     <tr>
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox"
@@ -159,4 +174,17 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Cuando se cambie la opción en el select
+            $('select[name="searchBy"]').change(function() {
+                // Hacer foco en el input de búsqueda
+                $('input[name="search"]').focus();
+            });
+        });
+    </script>
+
+
 @endsection

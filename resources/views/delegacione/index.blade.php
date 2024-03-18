@@ -12,7 +12,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Lista
+                        Listado
                     </div>
                     <h2 class="page-title">
                         {{ __('Delegaciones ') }}

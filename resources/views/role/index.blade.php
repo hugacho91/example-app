@@ -12,7 +12,7 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Listado de Roles
+                        Listado
                     </div>
                     <h2 class="page-title">
                         {{ __('Roles ') }}

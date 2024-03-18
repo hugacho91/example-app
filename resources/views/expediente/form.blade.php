@@ -1,6 +1,6 @@
 
 <div class="form-group mb-3">
-    <label class="form-label">   {{ Form::label('numero_expediente') }}</label>
+    <label class="form-label">   {{ Form::label('numero_expediente') }} *</label>
     <div>
         {{ Form::text('numero_expediente', $expediente->numero_expediente, ['class' => 'form-control' .
         ($errors->has('numero_expediente') ? ' is-invalid' : ''), 'placeholder' => 'Número de Expediente']) }}
@@ -9,13 +9,13 @@
     </div>
 </div>
 <div class="form-group mb-3">
-        <label class="form-label">Fecha de Entrada</label>
+        <label class="form-label">Fecha de Entrada *</label>
         <input type="date" id="fecha_entrada" name="fecha_entrada" value="{{ $expediente->fecha_entrada }}" class="form-control{{ $errors->has('fecha_entrada') ? ' is-invalid' : '' }}" placeholder="Fecha de inicio">
         {!! $errors->first('fecha_entrada', '<div class="invalid-feedback">:message</div>') !!}
 
 </div>
 <div class="form-group mb-3">
-    <label class="form-label">   {{ Form::label('iniciador') }}</label>
+    <label class="form-label">   {{ Form::label('iniciador') }} *</label>
     <div>
         {{ Form::text('iniciador', $expediente->iniciador, ['class' => 'form-control' .
         ($errors->has('iniciador') ? ' is-invalid' : ''), 'placeholder' => 'Iniciador']) }}
@@ -57,10 +57,12 @@
 <div class="form-group mb-3">
     <label class="form-label">{{ Form::label('delegacion_id', 'Delegación') }}</label>
     <div>
-        {{ Form::select('delegacion_id', [0 => 'Seleccionar',] + $delegaciones->toArray(), $expediente->delegacion_id, ['class' => 'form-control' . ($errors->has('delegacion_id') ? ' is-invalid' : '')]) }}
+        {{ Form::select('delegacion_id', $delegaciones, $expediente->delegacion_id, ['class' => 'form-control' . ($errors->has('delegacion_id') ? ' is-invalid' : '')]) }}
         {!! $errors->first('delegacion_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+
+
 
 <div class="form-group mb-3">
     <label class="form-label">{{ Form::label('seccion_id', 'Sección') }}</label>

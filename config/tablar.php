@@ -169,7 +169,7 @@ return [
         ],
         [
             'text' => 'Roles y permisos',
-            'icon' => 'ti ti-article',
+            'icon' => 'ti ti-lock',
             'url' => '/roles',
             'can' => 'roles.index'
         ],
@@ -184,7 +184,8 @@ return [
         [
             'text' => 'Actividades',
             'icon' => 'ti ti-folder',
-            'url' => '/actividades'
+            'url' => '/actividades',
+            'can' => 'actividades.index'
         ],
 
         [
