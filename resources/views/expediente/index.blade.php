@@ -71,8 +71,10 @@
                                             <option value="numero_expediente" {{ $searchBy === 'numero_expediente' ? 'selected' : '' }}>Número de Expediente</option>
                                             <option value="fecha_entrada" {{ $searchBy === 'fecha_entrada' ? 'selected' : '' }}>Fecha de Entrada</option>
                                             <option value="iniciador" {{ $searchBy === 'iniciador' ? 'selected' : '' }}>Iniciador</option>
+                                            <option value="contraparte" {{ $searchBy === 'contraparte' ? 'selected' : '' }}>Contraparte</option>                                          
                                             <option value="delegacion" {{ $searchBy === 'delegacion' ? 'selected' : '' }}>Delegación</option>
                                             <option value="seccion" {{ $searchBy === 'seccion' ? 'selected' : '' }}>Sección</option>
+                                            <option value="user" {{ $searchBy === 'user' ? 'selected' : '' }}>Usuario</option>
                                         </select>
                                         <input type="text" name="search" class="form-control form-control-sm flex-grow-1" value="{{ $search }}" aria-label="Search">
                                     </form>
@@ -102,8 +104,11 @@
 										<th>Número Expediente</th>
 										<th>Fecha Entrada</th>
 										<th>Iniciador</th>
+                                        <th>Contraparte</th>
 										<th>Delegación</th>
 										<th>Sección</th>
+                                        <th>Estado</th>
+                                        <th>Usuario</th>
 
 
                                     <th class="w-1"></th>
@@ -123,9 +128,12 @@
 											<td>{{ $expediente->numero_expediente }}</td>
 											<td>{{ $expediente->fecha_entrada }}</td>
 											<td>{{ $expediente->iniciador }}</td>
+                                            <td>{{ $expediente->contraparte}}</td>
 											<td>{{ $expediente->delegacione ? $expediente->delegacione->nombre : '' }}</td>
                                             <td>{{ $expediente->seccione ? $expediente->seccione->nombre : '' }}</td>
-
+                                            <td>{{ $expediente->estado }}</td>
+                                            <td>{{ $expediente->user ? $expediente->user->name : '' }}</td>
+                                            
                                         <td>
                                             <div class="btn-list flex-nowrap">
                                                 <div class="dropdown">

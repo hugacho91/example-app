@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Archivo;
 use App\Models\Delegacione;
 use App\Models\Seccione;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -81,7 +82,12 @@ class ExpedienteController extends Controller
             $seccionIds = Seccione::where('nombre', 'like', '%' . $search . '%')->pluck('id')->toArray();
             // Aplicar el filtro por ID de sección
             $query->whereIn('seccion_id', $seccionIds);
-        } else {
+        } elseif ($searchBy === 'user') {
+            // Obtener el ID de la sección usando el nombre proporcionado
+            $userIds = User::where('name', 'like', '%' . $search . '%')->pluck('id')->toArray();
+            // Aplicar el filtro por ID de sección
+            $query->whereIn('user_id', $userIds);
+        }else {
             // Si no estás buscando por delegación o sección, simplemente aplicar el filtro directamente en la columna correspondiente
             $query->where($searchBy, 'like', '%' . $search . '%');
         }
@@ -122,36 +128,39 @@ class ExpedienteController extends Controller
         return view('expediente.create', compact('expediente','delegaciones','secciones'));
     }*/
     public function create()
-{
-    $expediente = new Expediente();
-    $delegaciones = [];
-    $user = auth()->user();
+    {
+        $expediente = new Expediente();
+        $delegaciones = [];
+        $user = auth()->user();
 
-    // Obtener el ID de la delegación del usuario actual
-    $idDelegacionUsuario = auth()->user()->delegacion_id;
+        $expediente->fecha_entrada = now()->format('Y-m-d');
 
-    // Obtener la delegación del usuario actual
-    $delegacionUsuario = Delegacione::find($idDelegacionUsuario);
 
-    // Verificar si se encontró la delegación del usuario actual
-    if ($delegacionUsuario) {
-        // Si el usuario es de 'Santa Rosa', obtener todas las delegaciones
-        if ($delegacionUsuario->nombre === 'Santa Rosa') {
-            $delegaciones = Delegacione::pluck('nombre', 'id')->toArray();
-            // Agregar la opción "Seleccionar" al principio del array
-            $delegaciones = [0 => 'Seleccionar'] + $delegaciones;
-        } else {
-            // Si el usuario no es de 'Santa Rosa', obtener solo su propia delegación
-            $delegaciones[$idDelegacionUsuario] = $delegacionUsuario->nombre;
-            // Establecer la delegación del usuario como seleccionada
-            $expediente->delegacion_id = $idDelegacionUsuario;
+        // Obtener el ID de la delegación del usuario actual
+        $idDelegacionUsuario = auth()->user()->delegacion_id;
+
+        // Obtener la delegación del usuario actual
+        $delegacionUsuario = Delegacione::find($idDelegacionUsuario);
+
+        // Verificar si se encontró la delegación del usuario actual
+        if ($delegacionUsuario) {
+            // Si el usuario es de 'Santa Rosa', obtener todas las delegaciones
+            if ($delegacionUsuario->nombre === 'Santa Rosa') {
+                $delegaciones = Delegacione::pluck('nombre', 'id')->toArray();
+                // Agregar la opción "Seleccionar" al principio del array
+                $delegaciones = [0 => 'Seleccionar'] + $delegaciones;
+            } else {
+                // Si el usuario no es de 'Santa Rosa', obtener solo su propia delegación
+                $delegaciones[$idDelegacionUsuario] = $delegacionUsuario->nombre;
+                // Establecer la delegación del usuario como seleccionada
+                $expediente->delegacion_id = $idDelegacionUsuario;
+            }
         }
+
+        $secciones = Seccione::pluck('nombre', 'id');
+
+        return view('expediente.create', compact('expediente', 'delegaciones', 'secciones','user'));
     }
-
-    $secciones = Seccione::pluck('nombre', 'id');
-
-    return view('expediente.create', compact('expediente', 'delegaciones', 'secciones'));
-}
 
 
 
@@ -174,7 +183,7 @@ class ExpedienteController extends Controller
 		$data = $request->all();
 
 		// Establecer los campos opcionales como cadenas vacías si no están presentes
-		$fields = ['extracto', 'antecedentes', 'agregados'];
+		$fields = ['extracto', 'antecedentes', 'agregados','motivo'];
 		foreach ($fields as $field) {
 			$data[$field] = $data[$field] ?? '';
 		}
@@ -190,8 +199,6 @@ class ExpedienteController extends Controller
 		// Crear el expediente con los datos proporcionados
 		$expediente = Expediente::create($data);
 		
-
-
 
 		if ($request->hasFile('files')) {
 			
@@ -285,9 +292,16 @@ class ExpedienteController extends Controller
         }
     }
 
+    // Obtener el usuario asociado al expediente
+    $expedienteUser = User::find($expediente->user_id);
+
+    // Si el usuario asociado al expediente existe y no es nulo, usar ese usuario
+    // de lo contrario, usar el usuario actual
+    $user = $expedienteUser ?? auth()->user();
+
     $secciones = Seccione::pluck('nombre', 'id');
 
-    return view('expediente.edit', compact('expediente', 'delegaciones', 'secciones'));
+    return view('expediente.edit', compact('expediente', 'delegaciones', 'secciones','user'));
 }
 
 
@@ -311,7 +325,7 @@ class ExpedienteController extends Controller
 		$data = $request->all();
 
 		// Establecer los campos opcionales como cadenas vacías si no están presentes
-		$fields = ['extracto', 'antecedentes', 'agregados'];
+		$fields = ['extracto', 'antecedentes', 'agregados','motivo'];
 		foreach ($fields as $field) {
 			$data[$field] = $data[$field] ?? '';
 		}

@@ -186,6 +186,6 @@ docker-compose exec laravel.test php artisan migrate
 docker-compose exec laravel.test php artisan make:crud actividades
 
 git add .
-git commit -m "cambios 18-03-2024"
+git commit -m "cambios 18-03-2024 2"
 git push origin main
 

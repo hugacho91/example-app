@@ -27,6 +27,7 @@ class Expediente extends Model
 		'numero_expediente' => 'required',
 		'fecha_entrada' => 'required',
 		'iniciador' => 'required',
+    'contraparte' => 'required',
     ];
 
     protected $perPage = 20;
@@ -36,7 +37,7 @@ class Expediente extends Model
      *
      * @var array
      */
-    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','extracto','antecedentes','agregados','delegacion_id','seccion_id'];
+    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','contraparte','motivo','extracto','antecedentes','agregados','delegacion_id','seccion_id','user_id','estado'];
 
     public function archivos()
     {
@@ -47,10 +48,12 @@ class Expediente extends Model
       return $this->hasOne('App\Models\Delegacione','id','delegacion_id');
     }
 
-
-
     public function seccione(){
       return $this->hasOne('App\Models\Seccione','id','seccion_id');
+    }
+
+    public function user(){
+      return $this->hasOne('App\Models\User','id','user_id');
     }
     
 
