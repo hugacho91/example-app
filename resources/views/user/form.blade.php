@@ -25,6 +25,14 @@
 </div>
 
 <div class="form-group mb-3">
+    <label class="form-label">{{ Form::label('seccion_id', 'Sección') }}</label>
+    <div>
+        {{ Form::select('seccion_id', [0 => 'Seleccionar',] + $secciones->toArray(), $user->seccion_id, ['class' => 'form-control' . ($errors->has('seccion_id') ? ' is-invalid' : '')]) }}
+        {!! $errors->first('seccion_id', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+</div>
+
+<div class="form-group mb-3">
     <label class="form-label">   {{ Form::label('Rol') }}</label>
     
     <div id="roles-container">

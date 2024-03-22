@@ -37,7 +37,7 @@ class Expediente extends Model
      *
      * @var array
      */
-    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','contraparte','motivo','extracto','antecedentes','agregados','delegacion_id','seccion_id','user_id','estado'];
+    protected $fillable = ['numero_expediente','fecha_entrada','iniciador','contraparte','motivo','extracto','antecedentes','agregados','delegacion_id','seccion_id','user_id','estado','otro','numero_dictamen','dictamen','pase'];
 
     public function archivos()
     {

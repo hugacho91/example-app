@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Delegacione;
+use App\Models\Seccione;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -38,8 +39,9 @@ class UserController extends Controller
         $roles = Role::all();
 
         $delegaciones= Delegacione::pluck('nombre','id');
+        $secciones= Seccione::pluck('nombre','id');
 
-        return view('user.create', compact('user','roles','delegaciones'));
+        return view('user.create', compact('user','roles','delegaciones','secciones'));
     }
 
     /**
@@ -59,7 +61,7 @@ class UserController extends Controller
 		$data = $request->all();
 
         // Verificar y establecer los campos como nulos si vienen con el valor 0
-        $nullableFields = ['delegacion_id'];
+        $nullableFields = ['delegacion_id','seccion_id'];
         foreach ($nullableFields as $field) {
             if ($data[$field] == 0) {
                 $data[$field] = null;
@@ -97,8 +99,9 @@ class UserController extends Controller
 
         $roles = Role::all();
         $delegaciones= Delegacione::pluck('nombre','id');
+        $secciones= Seccione::pluck('nombre','id');
 
-        return view('user.edit', compact('user','roles','delegaciones'));
+        return view('user.edit', compact('user','roles','delegaciones','secciones'));
     }
 
     /**
@@ -119,7 +122,7 @@ class UserController extends Controller
 		$data = $request->all();
 
         // Verificar y establecer los campos como nulos si vienen con el valor 0
-        $nullableFields = ['delegacion_id'];
+        $nullableFields = ['delegacion_id','seccion_id'];
         foreach ($nullableFields as $field) {
             if ($data[$field] == 0) {
                 $data[$field] = null;

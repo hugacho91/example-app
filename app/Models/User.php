@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'delegacion_id',
+        'seccion_id',
     ];
 
     /**
@@ -50,5 +51,8 @@ class User extends Authenticatable
 
     public function delegacione(){
         return $this->hasOne('App\Models\Delegacione','id','delegacion_id');
+    }
+    public function seccione(){
+        return $this->hasOne('App\Models\Seccione','id','seccion_id');
     }
 }
