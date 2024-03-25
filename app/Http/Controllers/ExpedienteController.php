@@ -99,61 +99,64 @@ class ExpedienteController extends Controller
     }*/
 
     public function index()
-    {
-        // Obtener el número de elementos por página
-        $perPage = request()->input('perPage', 10);
+{
+    // Obtener el número de elementos por página
+    $perPage = request()->input('perPage', 10);
 
-        // Obtener el término de búsqueda
-        $search = request()->input('search', '');
+    // Obtener el término de búsqueda
+    $search = request()->input('search', '');
 
-        // Obtener el campo de búsqueda seleccionado
-        $searchBy = request()->input('searchBy', 'numero_expediente');
+    // Obtener el campo de búsqueda seleccionado
+    $searchBy = request()->input('searchBy', 'numero_expediente');
 
-        // Obtener el ID de la delegación del usuario actual
-        $idDelegacionUsuario = auth()->user()->delegacion_id;
+    // Obtener el ID de la delegación del usuario actual
+    $idDelegacionUsuario = auth()->user()->delegacion_id;
 
-        // Obtener el ID de la sección del usuario actual
-        $idSeccionUsuario = auth()->user()->seccion_id;
+    // Obtener el ID de la sección del usuario actual
+    $idSeccionUsuario = auth()->user()->seccion_id;
 
-        // Obtener la delegación del usuario actual
-        $delegacionUsuario = Delegacione::find($idDelegacionUsuario);
+    // Obtener la delegación del usuario actual
+    $delegacionUsuario = Delegacione::find($idDelegacionUsuario);
 
-        // Verificar si el usuario actual es de la delegación Santa Rosa
-        if ($delegacionUsuario && $delegacionUsuario->nombre === 'Santa Rosa') {
-            // Si es de la delegación Santa Rosa, mostrar todos los expedientes
-            $query = Expediente::query();
-        } else {
-            // Si no es de la delegación Santa Rosa, mostrar solo los expedientes de su delegación y sección
-            $query = Expediente::where('delegacion_id', $idDelegacionUsuario)
-                                ->where('seccion_id', $idSeccionUsuario);
-        }
-
-        // Filtrar por el campo de búsqueda seleccionado
-        if ($searchBy === 'delegacion') {
-            // Obtener el ID de la delegación usando el nombre proporcionado
-            $delegacionIds = Delegacione::where('nombre', 'like', '%' . $search . '%')->pluck('id')->toArray();
-            // Aplicar el filtro por ID de delegación
-            $query->whereIn('delegacion_id', $delegacionIds);
-        } elseif ($searchBy === 'seccion') {
-            // Obtener el ID de la sección usando el nombre proporcionado
-            $seccionIds = Seccione::where('nombre', 'like', '%' . $search . '%')->pluck('id')->toArray();
-            // Aplicar el filtro por ID de sección
-            $query->whereIn('seccion_id', $seccionIds);
-        } elseif ($searchBy === 'user') {
-            // Obtener el ID de la sección usando el nombre proporcionado
-            $userIds = User::where('name', 'like', '%' . $search . '%')->pluck('id')->toArray();
-            // Aplicar el filtro por ID de sección
-            $query->whereIn('user_id', $userIds);
-        } else {
-            // Si no estás buscando por delegación o sección, simplemente aplicar el filtro directamente en la columna correspondiente
-            $query->where($searchBy, 'like', '%' . $search . '%');
-        }
-
-        // Ejecutar la consulta paginada
-        $expedientes = $query->paginate($perPage);
-
-        return view('expediente.index', compact('expedientes', 'perPage', 'search', 'searchBy'));
+    // Verificar si el usuario actual es de la delegación Santa Rosa
+    if ($delegacionUsuario && $delegacionUsuario->nombre === 'Santa Rosa') {
+        // Si es de la delegación Santa Rosa, mostrar todos los expedientes
+        $query = Expediente::query();
+    } else {
+        // Si no es de la delegación Santa Rosa, mostrar solo los expedientes de su delegación y sección
+        $query = Expediente::where('delegacion_id', $idDelegacionUsuario)
+                            ->where('seccion_id', $idSeccionUsuario);
     }
+
+    // Filtrar por el campo de búsqueda seleccionado
+    if ($searchBy === 'delegacion') {
+        // Obtener el ID de la delegación usando el nombre proporcionado
+        $delegacionIds = Delegacione::where('nombre', 'like', '%' . $search . '%')->pluck('id')->toArray();
+        // Aplicar el filtro por ID de delegación
+        $query->whereIn('delegacion_id', $delegacionIds);
+    } elseif ($searchBy === 'seccion') {
+        // Obtener el ID de la sección usando el nombre proporcionado
+        $seccionIds = Seccione::where('nombre', 'like', '%' . $search . '%')->pluck('id')->toArray();
+        // Aplicar el filtro por ID de sección
+        $query->whereIn('seccion_id', $seccionIds);
+    } elseif ($searchBy === 'user') {
+        // Obtener el ID del usuario usando el nombre proporcionado
+        $userIds = User::where('name', 'like', '%' . $search . '%')->pluck('id')->toArray();
+        // Aplicar el filtro por ID de usuario
+        $query->whereIn('user_id', $userIds);
+    } else {
+        // Si no estás buscando por delegación, sección o usuario, simplemente aplicar el filtro directamente en la columna correspondiente
+        $query->where($searchBy, 'like', '%' . $search . '%');
+    }
+
+    // Ordenar los expedientes por fecha de forma descendente
+    $query->orderBy('fecha_entrada', 'desc');
+
+    // Ejecutar la consulta paginada
+    $expedientes = $query->paginate($perPage);
+
+    return view('expediente.index', compact('expedientes', 'perPage', 'search', 'searchBy'));
+}
 
     
 

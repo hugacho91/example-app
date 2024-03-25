@@ -3,6 +3,8 @@ use App\Http\Controllers\InstitucioneController;
 use App\Http\Controllers\CiudadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
@@ -164,3 +166,6 @@ Route::delete('archivos/{archivo}', [ArchivoController::class, 'eliminar'])->nam
 /*Route::resource('/delegacione', App\Http\Controllers\DelegacioneController::class);
 Route::resource('/seccione', App\Http\Controllers\SeccioneController::class);*/
 Route::resource('/actividade', App\Http\Controllers\ActividadeController::class);
+
+
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');

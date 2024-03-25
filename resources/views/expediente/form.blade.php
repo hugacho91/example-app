@@ -1,4 +1,5 @@
 
+
 <div class="row">
     <div class="col-md-6">
         <div class="form-group mb-3">
@@ -108,11 +109,11 @@
             </div>
         </div>
         <div class="form-group mb-3">
-            <label class="form-label">{{ Form::label('dictamen', 'Dictamen') }}</label>
-            <div>
-                {{ Form::textarea('dictamen', $expediente->dictamen, ['id' => 'editor', 'name' => 'dictamen', 'class' => 'form-control' . ($errors->has('dictamen') ? ' is-invalid' : ''), 'placeholder' => 'dictamen', 'rows' => '15']) }}
-            </div>
+    <label class="form-label">{{ Form::label('dictamen', 'Dictamen') }}</label>
+    <div style="">
+        {{ Form::textarea('dictamen', $expediente->dictamen, ['id' => 'editor', 'name' => 'dictamen', 'class' => 'form-control' . ($errors->has('dictamen') ? ' is-invalid' : ''), 'placeholder' => 'dictamen', 'rows' => '15']) }}
     </div>
+</div>
 
         <div class="form-group mb-3">
             <label class="form-label">   {{ Form::label('antecedentes') }}</label>
@@ -172,7 +173,16 @@
         </div>
     </div>
 </div>
-    
+
+
+@section('css')
+    <style>
+        /* Establecer un alto fijo para el editor de texto y permitir el desplazamiento vertical */
+        .form-control {
+             background:red;
+        }
+    </style>
+@endsection
 
 
 
