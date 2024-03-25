@@ -175,16 +175,6 @@
 </div>
 
 
-@section('css')
-    <style>
-        /* Establecer un alto fijo para el editor de texto y permitir el desplazamiento vertical */
-        .form-control {
-             background:red;
-        }
-    </style>
-@endsection
-
-
 
 @section('js') 
     
