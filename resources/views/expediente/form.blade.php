@@ -1,5 +1,12 @@
 
-
+@section('css')
+    <style>
+        .ck-restricted-editing_mode_standard {
+            height: 570px!important;
+            overflow-y: auto; /* o overflow: scroll; dependiendo de tus necesidades */
+        }
+    </style>
+    @stop
 <div class="row">
     <div class="col-md-6">
         <div class="form-group mb-3">
@@ -53,15 +60,23 @@
                 <!--<small class="form-hint">expediente <b>empleado</b> instruction.</small>-->
             </div>
         </div>
+
         <div class="form-group mb-3">
-            <label class="form-label">   {{ Form::label('agregados') }}</label>
+            <label class="form-label">{{ Form::label('antecedentes', 'Antecedentes') }}</label>
             <div>
-                {{ Form::text('agregados', $expediente->agregados, ['class' => 'form-control' .
-                ($errors->has('agregados') ? ' is-invalid' : ''), 'placeholder' => 'Agregados']) }}
-                {!! $errors->first('agregados', '<div class="invalid-feedback">:message</div>') !!}
-                <!--<small class="form-hint">expediente <b>dni_empleado</b> instruction.</small>-->
+                {{ Form::textarea('antecedentes', $expediente->antecedentes, ['class' => 'form-control' . ($errors->has('antecedentes') ? ' is-invalid' : ''), 'placeholder' => 'Antecedentes']) }}
+                {!! $errors->first('antecedentes', '<div class="invalid-feedback">:message</div>') !!}
             </div>
         </div>
+
+        <div class="form-group mb-3">
+            <label class="form-label">{{ Form::label('agregados', 'agregados') }}</label>
+            <div>
+                {{ Form::textarea('agregados', $expediente->agregados, ['class' => 'form-control' . ($errors->has('agregados') ? ' is-invalid' : ''), 'placeholder' => 'Agregados']) }}
+                {!! $errors->first('agregados', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
+
         <div class="form-group mb-3">
             <label class="form-label">{{ Form::label('delegacion_id', 'Delegación') }}</label>
             <div>
@@ -76,6 +91,8 @@
         {!! $errors->first('seccion_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 </div>
+
+
         <div class="form-group mb-3">
             <label class="form-label">{{ Form::label('pase', 'Pase') }}</label>
             <div>
@@ -115,15 +132,10 @@
     </div>
 </div>
 
-        <div class="form-group mb-3">
-            <label class="form-label">   {{ Form::label('antecedentes') }}</label>
-            <div>
-                {{ Form::text('antecedentes', $expediente->antecedentes, ['class' => 'form-control' .
-                ($errors->has('antecedentes') ? ' is-invalid' : ''), 'placeholder' => 'Antecedente']) }}
-                {!! $errors->first('antecedentes', '<div class="invalid-feedback">:message</div>') !!}
-                <!--<small class="form-hint">expediente <b>cuit_empleado</b> instruction.</small>-->
-            </div>
-        </div>
+
+
+        
+
         <div class="form-group mb-3">
             <label class="form-label">Agregar archivos adicionales:</label>
             <input type="file" name="files[]" class="form-control{{ $errors->has('files') ? ' is-invalid' : '' }}" multiple>
@@ -227,7 +239,7 @@
                     ]
                 },
                 // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-                placeholder: 'Expediente',
+                placeholder: 'Dictamen',
                 // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
                 fontFamily: {
                     options: [
